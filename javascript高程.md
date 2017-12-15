@@ -261,3 +261,43 @@ console.log(a.indexOf('a'))
 	同理，问题：如果在另一个地方需要用到原始方法，则会失败。<br>
 	我们知道函数是对象的一种，对他的引用是对其指针的存储，一旦修改引用该指针的变量，则该函数没有引用的话则会被垃圾回收机制回收。所以保险起见先定义个originToString方法指向原始方法，再修改这个方法
 </p>
+<h1>事件</h1>
+<h2>事件流 - 冒泡型事件 以及 捕获型事件</h2>
+<h2>事件监听函数</h2>
+<p>
+	分配方式：html javascript;<br>
+	分配在javascript中必须全部小写
+<pre>
+obj.onclick = function() {
+	fn.body....
+}
+</pre><hr>
+	分配在html中课小写onclick, 大写 ONCLICK, 驼峰 onClick, 类匈牙利 OnClick.
+</p>
+<h2>IE 中事件绑定的方法</h2>
+<p>
+	attachEvent 添加事件
+<pre>
+obj.attachEvent('onclick', fn)
+obj.onclick = function() {}
+//这两者等价的
+obj.detachEvent('obclick', fn) // 解除事件
+</pre><hr>
+</p>
+<h2>DOM 分配事件和移出事件的方法</h2>
+<p>
+	addEventListener() // 绑定 <br>
+	removeEventListener() // 移除 <br>
+<pre>
+obj.addEventListener('onclick', fn, isTrue)
+//第一个参数监听的事件名，第二个参数是处理的方法或者其指针，第三个是一个boolean值，true用作捕获阶段，false则是冒泡，默认是false（冒泡）
+<strong>如果事件是以false的方式绑定，那么同样需要一false的方式解除，如果参数不一样不会报错，只是不会真正的移除该事件</strong>
+</pre><hr>
+</p>
+<h2>事件对象</h2>
+<p>
+	1，引起事件的对象 <br>
+	2，事件发生时鼠标的信息 <br>
+	3，事件发生时键盘的信息 <br>
+	<strong>事件对象只有发生时才被创建，事件执行完毕会销毁事件对象</strong>
+</p>
