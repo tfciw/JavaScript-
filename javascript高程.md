@@ -272,7 +272,7 @@ obj.onclick = function() {
 	fn.body....
 }
 </pre><hr>
-	分配在html中课小写onclick, 大写 ONCLICK, 驼峰 onClick, 类匈牙利 OnClick.
+	分配在html中可小写onclick, 大写 ONCLICK, 驼峰 onClick, 类匈牙利 OnClick.
 </p>
 <h2>IE 中事件绑定的方法</h2>
 <p>
@@ -296,8 +296,70 @@ obj.addEventListener('onclick', fn, isTrue)
 </p>
 <h2>事件对象</h2>
 <p>
+	包含的信息：<br>
 	1，引起事件的对象 <br>
 	2，事件发生时鼠标的信息 <br>
 	3，事件发生时键盘的信息 <br>
 	<strong>事件对象只有发生时才被创建，事件执行完毕会销毁事件对象</strong>
+</p>
+<h2>IE的事件对象</h2>
+<p>
+	window.event 尽管是window的属性，可是还是只能在事件发生时访问，事件执行完毕会销毁。<br>
+	为什么在高级浏览器（dom）访问对象只需传递一个参数即可
+<pre>
+document.body.onclick = function(e) {
+	console.log(e)
+}
+//不管是传的e还是oEvent都能获取到，因为 e = arguments[0]
+document.body.onclick = function(oEvent) {
+	console.log(oEvent) //或者传递a，都行的
+}
+</pre><hr>
+</p>
+<h2>关于事件对象的属性以及方法（IE，DOM）</h2>
+<p>
+<pre>
+|----------------------IE--------------------------
+cancelBubble	boolean 是否阻止事件向上冒泡
+clietX			int 	鼠标在客户端区域的x坐标
+clietY			int 	鼠标在客户端区域的y坐标
+ctrlKey 		boolean 是否按下ctrl键
+shiftYey 		boolean 是否按下shift键
+keyCode			int 	keydown/keyup 按钮按下的unicode编码
+offsetX			int 	鼠标相对于引起引起事件对象的x坐标
+offsetY			int 	鼠标相对于引起引起事件对象的y坐标
+screenX 		int 	鼠标相对于屏幕的x坐标
+screenY 		int 	鼠标相对于屏幕的y坐标
+srcElement		element 引起事件的对象
+type			string	事件名称
+|----------------------DOM--------------------------
+cancelBubble	boolean 事件冒泡是否被取消
+clietX			int 	鼠标在客户端区域的x坐标
+clietY			int 	鼠标在客户端区域的y坐标
+screenX 		int 	鼠标相对于屏幕的x坐标
+screenY 		int 	鼠标相对于屏幕的y坐标
+detail 			int 	鼠标点击的次数
+ctrlKey 		boolean 是否按下ctrl键
+shiftYey 		boolean 是否按下shift键
+stopPropagation function调用该方法可阻止冒泡事件
+tarket 			element 引起事件的对象
+type			string	事件名称
+</pre><hr>
+</p>
+<h2>关键键盘码keyCode （相同之处）</h2>
+<pre>
+document.body.addEventListener('keydown', function(e) {
+	console.log(e.keyCode)
+})
+//如何知道我按的是哪个键，将keyCode在用字符串的String.fromCharCode方法返回（大写）
+</pre><hr>
+<h2>组织事件的默认行为（不同之处）</h2>
+<p>
+	ie: oEvent.returnValue = fasle  <br>
+	dom: oEvent.preventDefault()
+</p>
+<h2>停止事件冒泡</h2>
+<p>
+	ie：oEvent.cancelBubble = true <br>
+	dom：oEvent.stopPropagation()
 </p>
