@@ -5,7 +5,7 @@
 </style>
 <h1>ECMAScript基础</h1>
 <p>原始值：是存储在栈的数据段，简单（变量访问的位置就是值）。</p>
-<p>引用值：存储在堆里面的数据，变量访问的位置是在堆里的指针。</p>..........
+<p>引用值：存储在堆里面的数据，变量访问的位置是在堆里的指针。</p>
 <p>原始类型：undefined null number string Boolean。</p>
 <p>typeof 运算符（var也是运算符，用于申明变量的运算符）返回的只有五种值:undefined number string Boolean object。</p>
 <p>null为什么会返回对象，这是javascript最开始的一个错误，es沿用了下来，定义为是对象的占位符。</p>
@@ -348,8 +348,8 @@ type			string	事件名称
 </p>
 <h2>关键键盘码keyCode （相同之处）</h2>
 <pre>
-document.body.addEventListener('keydown', function(e) {
-	console.log(e.keyCode)
+window.addEventListener('keydown', function(e) {
+	console.log(String.fromCharCode(e.keyCode).toLowerCase())
 })
 //如何知道我按的是哪个键，将keyCode在用字符串的String.fromCharCode方法返回（大写）
 </pre><hr>
@@ -363,3 +363,56 @@ document.body.addEventListener('keydown', function(e) {
 	ie：oEvent.cancelBubble = true <br>
 	dom：oEvent.stopPropagation()
 </p>
+<h1>高级DOM编程技术</h1>
+<h2>obj.style</h2>
+<p>
+	obj.style.backgroundColor = 'red'，能够通过对象下面的style对象来获取或是设置属性，不过他获取的是内联样式，不能获取到css规则 <br>
+	那么document.styleSheets[0].cssRules || document.styleSheets[0].rules可以获取到css规则
+</p>
+<h2>获取表单</h2>
+<pre>
+docuemnt.getElementById('form') //需要在html给form绑定id
+docuemnt.getElementByTagName('form')[0] //以标签名的方式获取（数组）
+docuemnt.forms[0] //直接获取到表单（数组），类似上面的方法
+</pre>
+<h2>获取表单项</h2>
+<pre>
+console.log(document.forms[0].input1 == document.forms[0][0]) // => true
+通过name属性或者length去筛选
+</pre>
+<h1>拖拽</h1>
+<h1>Error</h1>
+<h2>取出错误信息</h2>
+<pre>
+window.onerror = function(sMessage, sUrl, sLine) {
+	console.log(sMessage + sUrl + sLine)
+	return true
+}
+//一定要返回true才不会执行浏览器默认的报错
+</pre>
+<h2>try-catch-finally</h2>
+<pre>
+try {
+	notExistFn() //执行发现错误立即退出try
+	console.log('error') //并不会执行
+} catch (error) {
+	console.log('错误原因：' + error) // 错误原因：ReferenceError: notExistFn is not defined
+} finally {
+	console.log('finally') //finally
+}
+</pre>
+<h2>throw与try-catch的结合组装error</h2>
+<pre>
+function fnError() {
+	if(arguments.length < 2) {
+		throw '参数要大于2个'
+		return
+	}
+	console.log('fnError')
+}
+try {
+	fnError()
+} catch (e) {
+	console.log(e)
+}
+</pre>
